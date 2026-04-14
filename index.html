@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Wedding Invitation</title>
+    <title>Wedding Invitation | Pratha & Mohit</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,6 +58,7 @@
             background-size: 30px 30px;
             background-position: 0 0, 15px 15px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 50;
@@ -65,28 +66,35 @@
         }
 
         .seal {
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle, #b22222, #800000);
-            border: 2px solid #d4af37;
+            width: 160px;
+            height: 160px;
+            background: #fff;
+            border: 3px solid #d4af37;
             border-radius: 50%;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: #d4af37;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             animation: pulse 2s infinite;
+            overflow: hidden;
+            margin-bottom: 20px;
         }
 
-        .seal span {
+        .seal img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .tap-text {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 14px;
+            font-size: 16px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 5px;
-            text-align: center;
+            letter-spacing: 2px;
+            color: #d4af37;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
@@ -107,6 +115,15 @@
 
         @keyframes fadeIn {
             to { opacity: 1; }
+        }
+
+        /* Ganesh Text Style */
+        .ganesh-text {
+            text-align: center;
+            font-size: 26px;
+            color: #8b0000;
+            margin-bottom: 20px;
+            font-weight: 600;
         }
 
         /* Announcement Section */
@@ -134,13 +151,6 @@
             color: #8b0000;
             line-height: 1.2;
             margin: 15px 0;
-        }
-
-        .parents {
-            font-size: 14px;
-            font-style: italic;
-            color: #7a6a61;
-            margin-bottom: 10px;
         }
 
         .ampersand {
@@ -277,32 +287,6 @@
             color: #7a6a61;
         }
 
-        /* Wardrobe Planner */
-        .wardrobe {
-            margin-bottom: 50px;
-        }
-
-        .wardrobe-card {
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-            text-align: center;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-        }
-
-        .wardrobe-card h5 {
-            font-size: 18px;
-            color: #8b0000;
-            margin-bottom: 5px;
-            font-family: 'Cormorant Garamond', serif;
-        }
-
-        .wardrobe-card p {
-            font-size: 12px;
-            color: #7a6a61;
-        }
-
         /* Location Section */
         .location {
             text-align: center;
@@ -316,6 +300,7 @@
             border-radius: 10px;
             margin-bottom: 15px;
             overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .btn {
@@ -330,6 +315,11 @@
             text-transform: uppercase;
             border: none;
             cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
         }
 
         /* RSVP Section */
@@ -392,22 +382,23 @@
 
     <div id="cover-screen">
         <div class="seal" onclick="revealInvite()">
-            <div class="script-font" style="font-size: 28px;">P&M</div>
-            <span>Tap to Reveal</span>
+            <img src="logo.jpeg" alt="P&M Logo">
         </div>
+        <div class="tap-text">Tap to Reveal</div>
     </div>
 
     <div id="main-invite">
         
+        <div class="ganesh-text serif">श्री गणेशाय नमः</div>
+
         <section class="announcement">
             <div class="heart">❤️</div>
             <h4>We are thrilled to announce</h4>
             
             <div class="names script-font">Pratha</div>
-            <!-- <div class="parents serif">d/o Rajiv & Sanya Malhotra</div> <div class="ampersand script-font">&</div> -->
-            
+            <div class="ampersand script-font">&</div>
             <div class="names script-font">Mohit</div>
-            <!-- <div class="parents serif">s/o Videsh & Kavita Agarwal</div> <div class="tying-knot serif">Are tying the knot on</div> -->
+            <div class="tying-knot serif">Are tying the knot on</div>
         </section>
 
         <section class="scratch-container">
@@ -472,36 +463,36 @@
 
         <section class="location">
             <h4 class="serif" style="margin-bottom: 10px; color: #7a6a61; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">The Celebration Awaits At</h4>
-            <h2 class="script-font" style="font-size: 36px; color: #8b0000; margin-bottom: 20px;">Essence Banquet</h2>
-            <p style="margin-bottom: 20px; font-size: 14px;">Four Seasons Hotel, Jalgaon, Maharashtra.</p>
+            <h2 class="script-font" style="font-size: 36px; color: #8b0000; margin-bottom: 20px;">Four Seasons Hotel</h2>
+            <p style="margin-bottom: 20px; font-size: 14px;">Jalgaon, Maharashtra.</p>
             
             <div class="map-container">
-                <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4263.645789124445!2d75.5879818!3d20.9832836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd90fda3f27fb19%3A0xb97c5414c2bd38bc!2sTHE%20FOUR%20SEASONS%20RECREATION!5e1!3m2!1sen!2sin!4v1776186308598!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4263.645789124445!2d75.5879818!3d20.9832836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd90fda3f27fb19%3A0xb97c5414c2bd38bc!2sTHE%20FOUR%20SEASONS%20RECREATION!5e1!3m2!1sen!2sin!4v1776186308598!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="https://maps.google.com/maps?q=Four+Seasons+Hotel,+Jalgaon,+Maharashtra&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
             
-            <a href="https://maps.google.com" target="_blank" class="btn">Get Directions</a>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=Four+Seasons+Hotel,+Jalgaon,+Maharashtra" target="_blank" class="btn">Get Directions</a>
         </section>
 
         <section class="rsvp">
             <h3 class="serif" style="font-size: 24px; color: #8b0000; margin-bottom: 20px;">Will You Be Joining Us?</h3>
-            <form onsubmit="event.preventDefault(); alert('RSVP Sent! (Connect this to your backend/form service)');">
+            
+            <form action="https://formspree.io/f/mbdqlkqn" method="POST">
                 <div class="form-group">
                     <label>Your Name</label>
-                    <input type="text" placeholder="Enter your full name" required>
+                    <input type="text" name="Guest Name" placeholder="Enter your full name" required>
                 </div>
                 
                 <div class="form-group">
                     <label>Will you attend?</label>
                     <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="attendance" value="accept" required> Joyfully Accept</label>
-                        <label class="radio-option"><input type="radio" name="attendance" value="decline"> Regretfully Decline</label>
+                        <label class="radio-option"><input type="radio" name="Attendance" value="Joyfully Accept" required> Joyfully Accept</label>
+                        <label class="radio-option"><input type="radio" name="Attendance" value="Regretfully Decline"> Regretfully Decline</label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Message (Optional)</label>
-                    <textarea rows="3" placeholder="Leave your wishes..."></textarea>
+                    <textarea name="Message" rows="3" placeholder="Leave your wishes..."></textarea>
                 </div>
 
                 <button type="submit" class="btn">Send RSVP</button>
@@ -522,7 +513,6 @@
             cover.style.display = 'none';
             main.style.display = 'block';
             
-            // Fire Confetti
             var duration = 3 * 1000;
             var end = Date.now() + duration;
 
@@ -547,7 +537,6 @@
                 }
             }());
             
-            // Initialize Scratchpad once visible
             initScratchCard();
         }, 800);
     }
@@ -561,7 +550,6 @@
         canvas.width = container.offsetWidth;
         canvas.height = container.offsetHeight;
 
-        // Fill with Gold Gradient
         let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
         gradient.addColorStop(0, '#bf953f');
         gradient.addColorStop(0.5, '#fcf6ba');
@@ -570,7 +558,6 @@
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Add text
         ctx.fillStyle = '#6a4a11';
         ctx.font = '600 16px "Montserrat", sans-serif';
         ctx.textAlign = 'center';
@@ -621,8 +608,7 @@
     }
 
     /* --- Countdown Timer Logic --- */
-    // CHANGE THIS: Set your wedding date and time here (Format: 'Month DD, YYYY HH:MM:SS')
-    const weddingDate = new Date('November 20, 2026 16:00:00').getTime();
+    const weddingDate = new Date('April 30, 2026 08:00:00').getTime();
 
     const timer = setInterval(function() {
         const now = new Date().getTime();
