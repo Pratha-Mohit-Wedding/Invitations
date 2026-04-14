@@ -7,7 +7,8 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"> -->
     
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
@@ -151,6 +152,8 @@
             color: #8b0000;
             line-height: 1.2;
             margin: 15px 0;
+            /* Updated to Montserrat for perfect readability */
+            font-family: 'Dancing Script', cursive;
         }
 
         .ampersand {
@@ -329,7 +332,7 @@
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .form-group {
@@ -374,6 +377,83 @@
             margin-top: 10px;
         }
 
+        /* Namaste Background & Family Section */
+        .namaste-section {
+            position: relative;
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .namaste-section::before {
+            content: '🙏'; /* Using a large emoji for the watermark namaste effect */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 150px;
+            opacity: 0.08; /* Very low opacity to sit behind the text */
+            z-index: 0;
+            color: #8b0000;
+        }
+
+        .namaste-section > * {
+            position: relative;
+            z-index: 1; /* Keeps text above the watermark */
+        }
+
+        .family-list {
+            list-style: none;
+            font-size: 18px;
+            line-height: 1.8;
+            color: #4a3b32;
+        }
+
+        .family-list li {
+            margin-bottom: 10px;
+        }
+
+        /* Royal Photo Frame */
+        .photo-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+            padding: 0 10px;
+        }
+
+        .royal-frame {
+            position: relative;
+            padding: 15px;
+            /* Gold gradient background for the frame */
+            background: linear-gradient(135deg, #d4af37, #fff2cd, #bf953f, #fff2cd, #d4af37);
+            border-radius: 150px 150px 10px 10px; /* Arched shape */
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .royal-frame::after {
+            content: '';
+            position: absolute;
+            top: 5px; right: 5px; bottom: 5px; left: 5px;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 145px 145px 5px 5px;
+            pointer-events: none; /* So it doesn't block right clicks on the image if needed */
+        }
+
+        .royal-frame img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            border-radius: 140px 140px 5px 5px;
+            border: 3px solid #fff;
+            display: block;
+        }
+
     </style>
 </head>
 <body>
@@ -395,10 +475,10 @@
             <div class="heart">❤️</div>
             <h4>We are thrilled to announce</h4>
             
-            <div class="names script-font">Pratha</div>
+            <div class="names script-font">Adv Pratha Ji</div>
             <div class="ampersand script-font">&</div>
-            <div class="names script-font">Mohit</div>
-            <div class="tying-knot serif">Are tying the knot on</div>
+            <div class="names script-font">CA Mohit Ji</div>
+            <div class="tying-knot serif">Are Having a Marriage Celebration on</div>
         </section>
 
         <section class="scratch-container">
@@ -427,10 +507,6 @@
 
         <div class="section-title serif">Itinerary</div>
         <section class="timeline">
-            <div class="event">
-                <h5 class="serif">30 Apr - Breakfast</h5>
-                <p>08:00-10:00 am</p>
-            </div>
             <div class="event">
                 <h5 class="serif">30 Apr - Dhun Dhamal</h5>
                 <p>10:00 am - 12:00 pm</p>
@@ -464,13 +540,13 @@
         <section class="location">
             <h4 class="serif" style="margin-bottom: 10px; color: #7a6a61; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">The Celebration Awaits At</h4>
             <h2 class="script-font" style="font-size: 36px; color: #8b0000; margin-bottom: 20px;">Four Seasons Hotel</h2>
-            <p style="margin-bottom: 20px; font-size: 14px;">Jalgaon, Maharashtra.</p>
+            <p style="margin-bottom: 20px; font-size: 14px;"> Jalgaon, Maharashtra.</p>
             
             <div class="map-container">
-                <iframe src="https://maps.google.com/maps?q=Four+Seasons+Hotel,+Jalgaon,+Maharashtra&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4879.667421910344!2d75.5879818!3d20.9832836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd90fda3f27fb19%3A0xb97c5414c2bd38bc!2sTHE%20FOUR%20SEASONS%20RECREATION!5e1!3m2!1sen!2sin!4v1776189430681!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
             
-            <a href="https://www.google.com/maps/dir/?api=1&destination=Four+Seasons+Hotel,+Jalgaon,+Maharashtra" target="_blank" class="btn">Get Directions</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Four+Seasons+Hotel,+Jalgaon,+Maharashtra" target="_blank" class="btn">Get Directions</a>
         </section>
 
         <section class="rsvp">
@@ -483,10 +559,10 @@
                 </div>
                 
                 <div class="form-group">
-                    <label>Will you attend?</label>
+                    <label>Please confirm Joining</label>
                     <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="Attendance" value="Joyfully Accept" required> Joyfully Accept</label>
-                        <label class="radio-option"><input type="radio" name="Attendance" value="Regretfully Decline"> Regretfully Decline</label>
+                        <label class="radio-option"><input type="radio" name="Attendance" value="Joyfully Accept" required> Yes</label>
+                        <label class="radio-option"><input type="radio" name="Attendance" value="Regretfully Decline"> Will Confirm</label>
                     </div>
                 </div>
 
@@ -497,6 +573,25 @@
 
                 <button type="submit" class="btn">Send RSVP</button>
             </form>
+        </section>
+
+        <section class="namaste-section">
+            <h3 class="script-font" style="font-size: 36px; color: #8b0000; margin-bottom: 10px;">Awaiting your presence</h3>
+            <div class="heart" style="color: #c8102e; font-size: 18px; margin-bottom: 25px;">❤️</div>
+            <ul class="family-list serif">
+                <li>Nirmala ji Kotecha</li>
+                <li>Prasanna Kotecha</li>
+                <li>Ankush - Vrudhi Kotecha</li>
+                <li>Prakrut, Vruttika,</li>
+                <li>Deshna and Tithi</li>
+                <li style="font-size: 16px; margin-top: 15px; color: #7a6a61;">Wani-Mumbai</li>
+            </ul>
+        </section>
+
+        <section class="photo-section">
+            <div class="royal-frame">
+                <img src="photo.jpeg" alt="Pratha and Mohit">
+            </div>
         </section>
 
     </div>
@@ -608,7 +703,8 @@
     }
 
     /* --- Countdown Timer Logic --- */
-    const weddingDate = new Date('April 30, 2026 08:00:00').getTime();
+    // Using strict ISO 8601 formatting with +05:30 to lock the timezone to IST and ensure iOS/Safari compatibility
+    const weddingDate = new Date('2026-04-30T08:00:00+05:30').getTime();
 
     const timer = setInterval(function() {
         const now = new Date().getTime();
