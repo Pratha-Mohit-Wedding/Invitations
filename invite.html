@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Wedding Invitation</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* Base Styles & Resets */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            color: #4a3b32;
+        }
+
+        /* Mobile Container to mimic phone view on desktop */
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            position: relative;
+            overflow-x: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3, .serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .script-font {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* --- Cover Screen --- */
+        #cover-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #8b0000;
+            background-image: radial-gradient(#a00000 2px, transparent 2px), radial-gradient(#a00000 2px, transparent 2px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .seal {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #b22222, #800000);
+            border: 2px solid #d4af37;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #d4af37;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            animation: pulse 2s infinite;
+        }
+
+        .seal span {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+            text-align: center;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- Main Invite Screen --- */
+        #main-invite {
+            display: none;
+            padding: 40px 20px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            background: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="%23ffd1d1" opacity="0.2"/></svg>') no-repeat center center;
+            background-size: cover;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Announcement Section */
+        .announcement {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .announcement .heart {
+            color: #c8102e;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .announcement h4 {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #7a6a61;
+            margin-bottom: 20px;
+        }
+
+        .names {
+            font-size: 48px;
+            color: #8b0000;
+            line-height: 1.2;
+            margin: 15px 0;
+        }
+
+        .parents {
+            font-size: 14px;
+            font-style: italic;
+            color: #7a6a61;
+            margin-bottom: 10px;
+        }
+
+        .ampersand {
+            font-size: 30px;
+            color: #d4af37;
+            margin: 10px 0;
+        }
+
+        .tying-knot {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        /* Scratch Card */
+        .scratch-container {
+            position: relative;
+            width: 280px;
+            height: 60px;
+            margin: 0 auto 30px auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .date-reveal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            font-size: 22px;
+            font-weight: 600;
+            color: #8b0000;
+            letter-spacing: 2px;
+        }
+
+        #scratch-pad {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        /* Countdown */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+
+        .time-box {
+            text-align: center;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 24px;
+            font-weight: 400;
+            color: #8b0000;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .time-box label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #7a6a61;
+        }
+
+        /* Timeline Section */
+        .section-title {
+            text-align: center;
+            font-size: 24px;
+            color: #8b0000;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 300px;
+            margin: 0 auto 50px auto;
+            padding-left: 20px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background-color: #d4af37;
+        }
+
+        .event {
+            position: relative;
+            margin-bottom: 25px;
+            padding-left: 15px;
+        }
+
+        .event::before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background-color: #8b0000;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+
+        .event h5 {
+            font-size: 16px;
+            color: #4a3b32;
+            margin-bottom: 5px;
+        }
+
+        .event p {
+            font-size: 12px;
+            color: #7a6a61;
+        }
+
+        /* Wardrobe Planner */
+        .wardrobe {
+            margin-bottom: 50px;
+        }
+
+        .wardrobe-card {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .wardrobe-card h5 {
+            font-size: 18px;
+            color: #8b0000;
+            margin-bottom: 5px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .wardrobe-card p {
+            font-size: 12px;
+            color: #7a6a61;
+        }
+
+        /* Location Section */
+        .location {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 200px;
+            background-color: #ddd; 
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #8b0000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* RSVP Section */
+        .rsvp {
+            background: #fff;
+            padding: 25px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            color: #7a6a61;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 5px;
+        }
+
+        .radio-option {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .rsvp .btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+
+    <div id="cover-screen">
+        <div class="seal" onclick="revealInvite()">
+            <div class="script-font" style="font-size: 28px;">P&M</div>
+            <span>Tap to Reveal</span>
+        </div>
+    </div>
+
+    <div id="main-invite">
+        
+        <section class="announcement">
+            <div class="heart">❤️</div>
+            <h4>We are thrilled to announce</h4>
+            
+            <div class="names script-font">Pratha</div>
+            <div class="parents serif">d/o Rajiv & Sanya Malhotra</div> <div class="ampersand script-font">&</div>
+            
+            <div class="names script-font">Mohit</div>
+            <div class="parents serif">s/o Videsh & Kavita Agarwal</div> <div class="tying-knot serif">Are tying the knot on</div>
+        </section>
+
+        <section class="scratch-container">
+            <div class="date-reveal serif" id="wedding-date-text">20 November 2026</div>
+            <canvas id="scratch-pad"></canvas>
+        </section>
+
+        <section class="countdown">
+            <div class="time-box">
+                <span id="days">00</span>
+                <label>Days</label>
+            </div>
+            <div class="time-box">
+                <span id="hours">00</span>
+                <label>Hours</label>
+            </div>
+            <div class="time-box">
+                <span id="minutes">00</span>
+                <label>Minutes</label>
+            </div>
+            <div class="time-box">
+                <span id="seconds">00</span>
+                <label>Seconds</label>
+            </div>
+        </section>
+
+        <div class="section-title serif">Itinerary</div>
+        <section class="timeline">
+            <div class="event">
+                <h5 class="serif">Wed, 18 Nov - Chaak Bhaat</h5>
+                <p>11:00 AM onwards</p>
+            </div>
+            <div class="event">
+                <h5 class="serif">Wed, 18 Nov - Sangeet</h5>
+                <p>7:00 PM onwards</p>
+            </div>
+            <div class="event">
+                <h5 class="serif">Thu, 19 Nov - Haldi Carnival</h5>
+                <p>12:00 PM onwards</p>
+            </div>
+            <div class="event">
+                <h5 class="serif">Fri, 20 Nov - The Big Day</h5>
+                <p>4:00 PM onwards</p>
+            </div>
+        </section>
+
+        <div class="section-title serif">Wardrobe Planner</div>
+        <section class="wardrobe">
+            <div class="wardrobe-card">
+                <h5>Chaak Bhaat</h5>
+                <p>Colorful & Vibrant Traditional Suits or Shorts in Leheriya</p>
+            </div>
+            <div class="wardrobe-card">
+                <h5>Sangeet</h5>
+                <p>Chic & Glamorous Fusion</p>
+            </div>
+            <div class="wardrobe-card">
+                <h5>The Big Day</h5>
+                <p>Classic Traditional</p>
+            </div>
+        </section>
+
+        <section class="location">
+            <h4 class="serif" style="margin-bottom: 10px; color: #7a6a61; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">The Celebration Awaits At</h4>
+            <h2 class="script-font" style="font-size: 36px; color: #8b0000; margin-bottom: 20px;">Essence Banquet</h2>
+            <p style="margin-bottom: 20px; font-size: 14px;">Lucknow</p>
+            
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d113911.16439343353!2d80.86014461623871!3d26.848698188280633!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfd991f32b16b%3A0x93ccba8909978be7!2sLucknow%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1714421453215!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            
+            <a href="https://maps.google.com" target="_blank" class="btn">Get Directions</a>
+        </section>
+
+        <section class="rsvp">
+            <h3 class="serif" style="font-size: 24px; color: #8b0000; margin-bottom: 20px;">Will You Be Joining Us?</h3>
+            <form onsubmit="event.preventDefault(); alert('RSVP Sent! (Connect this to your backend/form service)');">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Will you attend?</label>
+                    <div class="radio-group">
+                        <label class="radio-option"><input type="radio" name="attendance" value="accept" required> Joyfully Accept</label>
+                        <label class="radio-option"><input type="radio" name="attendance" value="decline"> Regretfully Decline</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Message (Optional)</label>
+                    <textarea rows="3" placeholder="Leave your wishes..."></textarea>
+                </div>
+
+                <button type="submit" class="btn">Send RSVP</button>
+            </form>
+        </section>
+
+    </div>
+</div>
+
+<script>
+    /* --- Transition & Confetti Logic --- */
+    function revealInvite() {
+        const cover = document.getElementById('cover-screen');
+        const main = document.getElementById('main-invite');
+        
+        cover.style.opacity = '0';
+        setTimeout(() => {
+            cover.style.display = 'none';
+            main.style.display = 'block';
+            
+            // Fire Confetti
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ffb6c1', '#d4af37', '#8b0000']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ffb6c1', '#d4af37', '#8b0000']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+            
+            // Initialize Scratchpad once visible
+            initScratchCard();
+        }, 800);
+    }
+
+    /* --- Scratch Card Logic --- */
+    function initScratchCard() {
+        const canvas = document.getElementById('scratch-pad');
+        const ctx = canvas.getContext('2d');
+        const container = canvas.parentElement;
+        
+        canvas.width = container.offsetWidth;
+        canvas.height = container.offsetHeight;
+
+        // Fill with Gold Gradient
+        let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        gradient.addColorStop(0, '#bf953f');
+        gradient.addColorStop(0.5, '#fcf6ba');
+        gradient.addColorStop(1, '#b38728');
+        
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Add text
+        ctx.fillStyle = '#6a4a11';
+        ctx.font = '600 16px "Montserrat", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('✨ Scratch Here ✨', canvas.width / 2, canvas.height / 2);
+
+        let isDrawing = false;
+
+        function getMousePos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            scratch(e);
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function scratch(e) {
+            if (!isDrawing) return;
+            e.preventDefault();
+
+            const pos = getMousePos(e);
+            
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.beginPath();
+            ctx.arc(pos.x, pos.y, 20, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', scratch);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseleave', stopDrawing);
+
+        canvas.addEventListener('touchstart', startDrawing);
+        canvas.addEventListener('touchmove', scratch);
+        canvas.addEventListener('touchend', stopDrawing);
+    }
+
+    /* --- Countdown Timer Logic --- */
+    // CHANGE THIS: Set your wedding date and time here (Format: 'Month DD, YYYY HH:MM:SS')
+    const weddingDate = new Date('November 20, 2026 16:00:00').getTime();
+
+    const timer = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = weddingDate - now;
+
+        if (distance < 0) {
+            clearInterval(timer);
+            document.getElementById('days').innerText = "00";
+            document.getElementById('hours').innerText = "00";
+            document.getElementById('minutes').innerText = "00";
+            document.getElementById('seconds').innerText = "00";
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('days').innerText = days.toString().padStart(2, '0');
+        document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+    }, 1000);
+</script>
+
+</body>
+</html>
