@@ -7,8 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Amita:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@600&family=Tiro+Devanagari+Hindi:ital@0;1&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
@@ -39,12 +38,52 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
 
+        /* Typography Utility Classes */
+        .font-en-serif { font-family: 'Cormorant Garamond', serif; }
+        .font-hi-serif { font-family: 'Tiro Devanagari Hindi', serif; }
+        .font-en-script { font-family: 'Dancing Script', cursive; }
+        .font-hi-script { font-family: 'Amita', cursive; }
+        
         h1, h2, h3, .serif {
             font-family: 'Cormorant Garamond', serif;
         }
 
         .script-font {
-            font-family: 'Great Vibes', cursive;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Language Toggle Logic */
+        body.lang-hi .lang-en { display: none !important; }
+        body.lang-en .lang-hi { display: none !important; }
+
+        .lang-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            overflow: hidden;
+            border: 1px solid #d4af37;
+        }
+
+        .lang-switcher button {
+            background: transparent;
+            border: none;
+            padding: 6px 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: #7a6a61;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .lang-switcher button.active {
+            background: #8b0000;
+            color: #fff;
         }
 
         /* --- Cover Screen --- */
@@ -89,7 +128,6 @@
         }
 
         .tap-text {
-            font-family: 'Cormorant Garamond', serif;
             font-size: 16px;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -152,8 +190,6 @@
             color: #8b0000;
             line-height: 1.2;
             margin: 15px 0;
-            /* Updated to Montserrat for perfect readability */
-            font-family: 'Dancing Script', cursive;
         }
 
         .ampersand {
@@ -224,7 +260,6 @@
             font-size: 24px;
             font-weight: 400;
             color: #8b0000;
-            font-family: 'Cormorant Garamond', serif;
         }
 
         .time-box label {
@@ -390,20 +425,20 @@
         }
 
         .namaste-section::before {
-            content: '🙏'; /* Using a large emoji for the watermark namaste effect */
+            content: '🙏';
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 150px;
-            opacity: 0.08; /* Very low opacity to sit behind the text */
+            opacity: 0.08;
             z-index: 0;
             color: #8b0000;
         }
 
         .namaste-section > * {
             position: relative;
-            z-index: 1; /* Keeps text above the watermark */
+            z-index: 1;
         }
 
         .family-list {
@@ -428,9 +463,8 @@
         .royal-frame {
             position: relative;
             padding: 15px;
-            /* Gold gradient background for the frame */
             background: linear-gradient(135deg, #d4af37, #fff2cd, #bf953f, #fff2cd, #d4af37);
-            border-radius: 150px 150px 10px 10px; /* Arched shape */
+            border-radius: 150px 150px 10px 10px;
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
             width: 100%;
             max-width: 320px;
@@ -442,7 +476,7 @@
             top: 5px; right: 5px; bottom: 5px; left: 5px;
             border: 2px solid rgba(255, 255, 255, 0.6);
             border-radius: 145px 145px 5px 5px;
-            pointer-events: none; /* So it doesn't block right clicks on the image if needed */
+            pointer-events: none;
         }
 
         .royal-frame img {
@@ -456,83 +490,110 @@
 
     </style>
 </head>
-<body>
+<body class="lang-en"> <div class="app-container">
 
-<div class="app-container">
+    <div id="lang-menu" class="lang-switcher" style="display: none;">
+        <button id="btn-en" class="active" onclick="setLanguage('en')">EN</button>
+        <button id="btn-hi" onclick="setLanguage('hi')">HI</button>
+    </div>
 
     <div id="cover-screen">
         <div class="seal" onclick="revealInvite()">
             <img src="logo.jpeg" alt="P&M Logo">
         </div>
-        <div class="tap-text">Tap to Reveal</div>
+        <div class="tap-text lang-en font-en-serif">Tap to Reveal</div>
+        <div class="tap-text lang-hi font-hi-serif" style="text-transform: none;">खोलने के लिए टैप करें</div>
     </div>
 
     <div id="main-invite">
         
-        <div class="ganesh-text serif">श्री गणेशाय नमः</div>
+        <div class="ganesh-text font-hi-serif">श्री गणेशाय नमः</div>
 
         <section class="announcement">
             <div class="heart">❤️</div>
-            <h4>We are thrilled to announce</h4>
+            <h4 class="lang-en">We are thrilled to announce</h4>
+            <h4 class="lang-hi font-hi-serif" style="text-transform: none; font-size: 16px;">हमें यह बताते हुए अपार हर्ष हो रहा है कि</h4>
             
-            <div class="names script-font">Adv Pratha</div>
+            <div class="names lang-en script-font">Adv Pratha</div>
+            <div class="names lang-hi font-hi-script" style="font-size: 42px;">एडवोकेट प्रथा</div>
+            
             <div class="ampersand script-font">&</div>
-            <div class="names script-font">CA Mohit Ji</div>
-            <div class="tying-knot serif">Are Having a Marriage Celebration on</div>
+            
+            <div class="names lang-en script-font">CA Mohit Ji</div>
+            <div class="names lang-hi font-hi-script" style="font-size: 42px;">सी.ए. मोहित जी</div>
+            
+            <div class="tying-knot lang-en serif">Are Having a Marriage Celebration on</div>
+            <div class="tying-knot lang-hi font-hi-serif" style="text-transform: none; font-size: 16px;">का शुभ विवाह संपन्न होने जा रहा है</div>
         </section>
 
         <section class="scratch-container">
-            <div class="date-reveal serif" id="wedding-date-text">30 April 2026</div>
+            <div class="date-reveal">
+                <span class="lang-en serif">30 April 2026</span>
+                <span class="lang-hi font-hi-serif">30 अप्रैल 2026</span>
+            </div>
             <canvas id="scratch-pad"></canvas>
         </section>
 
         <section class="countdown">
             <div class="time-box">
-                <span id="days">00</span>
-                <label>Days</label>
+                <span id="days" class="font-en-serif">00</span>
+                <label class="lang-en font-en-serif">Days</label>
+                <label class="lang-hi font-hi-serif" style="text-transform: none; font-size: 12px;">दिन</label>
             </div>
             <div class="time-box">
-                <span id="hours">00</span>
-                <label>Hours</label>
+                <span id="hours" class="font-en-serif">00</span>
+                <label class="lang-en font-en-serif">Hours</label>
+                <label class="lang-hi font-hi-serif" style="text-transform: none; font-size: 12px;">घंटे</label>
             </div>
             <div class="time-box">
-                <span id="minutes">00</span>
-                <label>Minutes</label>
+                <span id="minutes" class="font-en-serif">00</span>
+                <label class="lang-en font-en-serif">Minutes</label>
+                <label class="lang-hi font-hi-serif" style="text-transform: none; font-size: 12px;">मिनट</label>
             </div>
             <div class="time-box">
-                <span id="seconds">00</span>
-                <label>Seconds</label>
+                <span id="seconds" class="font-en-serif">00</span>
+                <label class="lang-en font-en-serif">Seconds</label>
+                <label class="lang-hi font-hi-serif" style="text-transform: none; font-size: 12px;">सेकंड</label>
             </div>
         </section>
 
-        <div class="section-title serif">Itinerary</div>
+        <div class="section-title lang-en serif">Itinerary</div>
+        <div class="section-title lang-hi font-hi-serif" style="text-transform: none; font-size: 28px;">कार्यक्रम</div>
+        
         <section class="timeline">
             <div class="event">
-                <h5 class="serif">30 Apr - Dhun Dhamal</h5>
+                <h5 class="lang-en serif">30 Apr - Dhun Dhamal</h5>
+                <h5 class="lang-hi font-hi-serif" style="font-size: 18px;">30 अप्रैल - धुन धमाल</h5>
                 <p>10:00 am - 12:00 pm</p>
             </div>
             <div class="event">
-                <h5 class="serif">30 Apr - Lunch</h5>
+                <h5 class="lang-en serif">30 Apr - Lunch</h5>
+                <h5 class="lang-hi font-hi-serif" style="font-size: 18px;">30 अप्रैल - स्नेहभोज (Lunch)</h5>
                 <p>12:00 - 02:00 pm</p>
             </div>
             <div class="event">
-                <h5 class="serif">30 Apr - Swagat</h5>
+                <h5 class="lang-en serif">30 Apr - Swagat</h5>
+                <h5 class="lang-hi font-hi-serif" style="font-size: 18px;">30 अप्रैल - स्वागत</h5>
                 <p>02:00 - 03:00 pm</p>
             </div>
             <div class="event">
-                <h5 class="serif">30 Apr - Vidai</h5>
+                <h5 class="lang-en serif">30 Apr - Vidai</h5>
+                <h5 class="lang-hi font-hi-serif" style="font-size: 18px;">30 अप्रैल - विदाई</h5>
                 <p>03:00 - 04:00 pm</p>
             </div>
             <div class="event">
-                <h5 class="serif">30 Apr - High Tea</h5>
+                <h5 class="lang-en serif">30 Apr - High Tea</h5>
+                <h5 class="lang-hi font-hi-serif" style="font-size: 18px;">30 अप्रैल - हाई टी</h5>
                 <p>05:00 - 06:00 pm</p>
             </div>
             <div class="event">
-                <h5 class="serif">30 Apr - Joint Samela and Royal Entry</h5>
+                <h5 class="lang-en serif">30 Apr - Joint Samela and Royal Entry</h5>
+                <h5 class="lang-hi font-hi-serif" style="font-size: 18px;">30 अप्रैल - संयुक्त समेला और शाही प्रवेश</h5>
                 <p>06:30 pm Onwards</p>
             </div>
             <div class="event">
-                <h5 class="serif">30 Apr - Reception</h5>
+                <h5 class="lang-en serif">30 Apr - Reception</h5>
+                <h5 class="lang-hi font-hi-serif" style="font-size: 18px;">30 अप्रैल - रिसेप्शन</h5>
                 <p>07:00 pm onwards</p>
             </div>
         </section>
@@ -576,15 +637,27 @@
         </section>
 
         <section class="namaste-section">
-            <h3 class="script-font" style="font-size: 36px; color: #8b0000; margin-bottom: 10px;">Awaiting your presence</h3>
+            <h3 class="lang-en script-font" style="font-size: 36px; color: #8b0000; margin-bottom: 10px;">Awaiting your presence</h3>
+            <h3 class="lang-hi font-hi-script" style="font-size: 42px; color: #8b0000; margin-bottom: 10px;">दर्शनाभिलाषी</h3>
+            
             <div class="heart" style="color: #c8102e; font-size: 18px; margin-bottom: 25px;">❤️</div>
-            <ul class="family-list serif">
+            
+            <ul class="family-list lang-en serif">
                 <li>Smt. Nirmala Kasturchandji Kotecha</li>
                 <li>Prasanna Kotecha</li>
                 <li>Ankush - Vrudhi Kotecha</li>
                 <li>Prakrut, Vruttika,</li>
                 <li>Deshna and Tithi</li>
-                <li style="font-size: 16px; margin-top: 15px; color: #7a6a61;">Wani-Mumbai</li>
+                <li style="font-size: 16px; margin-top: 15px; color: #7a6a61; font-family: 'Montserrat', sans-serif;">Wani-Mumbai</li>
+            </ul>
+
+            <ul class="family-list lang-hi font-hi-serif" style="font-size: 20px;">
+                <li>श्रीमती निर्मला कस्तूरचंदजी कोटेचा</li>
+                <li>प्रसन्ना कोटेचा</li>
+                <li>अंकुश - वृधि कोटेचा</li>
+                <li>प्राकृत, वृत्तिका,</li>
+                <li>देशना और तिथि</li>
+                <li style="font-size: 16px; margin-top: 15px; color: #7a6a61; font-family: 'Tiro Devanagari Hindi', serif;">वाणी - मुंबई</li>
             </ul>
         </section>
 
@@ -598,15 +671,32 @@
 </div>
 
 <script>
+    /* --- Language Switcher Logic --- */
+    function setLanguage(lang) {
+        if (lang === 'hi') {
+            document.body.classList.remove('lang-en');
+            document.body.classList.add('lang-hi');
+            document.getElementById('btn-en').classList.remove('active');
+            document.getElementById('btn-hi').classList.add('active');
+        } else {
+            document.body.classList.remove('lang-hi');
+            document.body.classList.add('lang-en');
+            document.getElementById('btn-hi').classList.remove('active');
+            document.getElementById('btn-en').classList.add('active');
+        }
+    }
+
     /* --- Transition & Confetti Logic --- */
     function revealInvite() {
         const cover = document.getElementById('cover-screen');
         const main = document.getElementById('main-invite');
+        const langMenu = document.getElementById('lang-menu');
         
         cover.style.opacity = '0';
         setTimeout(() => {
             cover.style.display = 'none';
             main.style.display = 'block';
+            langMenu.style.display = 'flex'; /* Show language toggle after reveal */
             
             var duration = 3 * 1000;
             var end = Date.now() + duration;
